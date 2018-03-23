@@ -3,6 +3,7 @@ package com.kadirkuruca.broadcastreceiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,12 +17,20 @@ public class FirstReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String isim = intent.getStringExtra("ad");
-        int yas = intent.getIntExtra("yas",0);
+        if(isOrderedBroadcast()) {
+            int code = getResultCode();
+            String data = getResultData();
+            Bundle b = getResultExtras(true);
+            String ad = b.getString("ad");
 
-        Log.e(TAG,"isim : "+isim+" Yaş : "+yas);
+            Log.e(TAG, "Code : " + code + " ,Data : " + data + " ,Ad : " + ad);
+            Log.e(TAG,"Birinci Receiver. Thread : "+Thread.currentThread().getName());
+            Toast.makeText(context,"Birinci Receiver",Toast.LENGTH_SHORT).show();
+            setResultCode(42);
+            setResultData("Broadcast");
+            b.putString("ad","Receiver1");
+            setResultExtras(b);
+        }
 
-        Log.e(TAG,"Uçak Moduna Geçtiniz. Thread : "+Thread.currentThread().getName());
-        Toast.makeText(context,"Uçak Moduna Geçtiniz",Toast.LENGTH_SHORT).show();
     }
 }

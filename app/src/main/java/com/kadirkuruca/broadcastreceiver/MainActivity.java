@@ -27,20 +27,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Intent intent = new Intent(this,FirstReceiver.class);
         Intent intent = new Intent("custom.action.name");
-        intent.putExtra("ad","Kadir Kuruca");
-        intent.putExtra("yas", 22);
-        sendBroadcast(intent);
+        //sendBroadcast(intent);
+        //sendOrderedBroadcast(intent, null);
+        Bundle bundle = new Bundle();
+        bundle.putString("ad","Kadir");
+        sendOrderedBroadcast(intent,null, new FourthReceiver(),null,AppCompatActivity.RESULT_OK,"Android",bundle);
     }
 
-    public void sendBroadcastInnerClass(View view) {
-        //Intent intent = new Intent(this,SecondReceiver.class);
-        Intent intent = new Intent("custom.action.name2");
-        Bundle bundle = new Bundle();
-        bundle.putString("ad","Kadir Kuruca");
-        bundle.putInt("yas",22);
-        intent.putExtras(bundle);
-        sendBroadcast(intent);
-    }
 
     public static class SecondReceiver extends BroadcastReceiver{
 
@@ -48,12 +41,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            String isim = intent.getStringExtra("ad");
-            int yas = intent.getIntExtra("yas",0);
+            if(isOrderedBroadcast()) {
+                int code = getResultCode();
+                String data = getResultData();
+                Bundle b = getResultExtras(true);
+                String ad = b.getString("ad");
 
-            Log.e(TAG,"isim : "+isim+" Yaş : "+yas);
-            Log.e(TAG,"InnerClass Receiver");
-            Toast.makeText(context,"InnerClass Receiver",Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Code : " + code + " ,Data : " + data + " ,Ad : " + ad);
+                Log.e(TAG,"InnerClass Receiver");
+                Toast.makeText(context,"InnerClass Receiver",Toast.LENGTH_SHORT).show();
+
+                setResultCode(7);
+                setResultData("Kotlin");
+                b.putString("ad","Kadir2");
+                setResultExtras(b);
+            }
+
         }
     }
 }

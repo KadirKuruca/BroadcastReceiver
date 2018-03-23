@@ -8,16 +8,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * Created by Kadir on 23.03.2018.
+ * Created by Kadir on 24.03.2018.
  */
 
-public class ThirdReceiver extends BroadcastReceiver {
-
-    private static final String TAG = ThirdReceiver.class.getSimpleName();
-
+public class FourthReceiver extends BroadcastReceiver{
+    public static final String TAG = FourthReceiver.class.getSimpleName();
     @Override
-    public void onReceive(Context context, Intent intent) {
-
+    public void onReceive(Context context, Intent ıntent) {
         if(isOrderedBroadcast()) {
             int code = getResultCode();
             String data = getResultData();
@@ -25,13 +22,8 @@ public class ThirdReceiver extends BroadcastReceiver {
             String ad = b.getString("ad");
 
             Log.e(TAG, "Code : " + code + " ,Data : " + data + " ,Ad : " + ad);
-            Log.e(TAG, "Üçüncü Receiver");
-            Toast.makeText(context, "Üçüncü Receiver", Toast.LENGTH_SHORT).show();
-
-            setResultCode(15);
-            setResultData("Java");
-            b.putString("ad","Kuruca");
-            setResultExtras(b);
+            Log.e(TAG, "Dördüncü Receiver");
+            Toast.makeText(context, "Dördüncü Receiver", Toast.LENGTH_SHORT).show();
         }
     }
 }
