@@ -25,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendBroadcastMessage(View view) {
 
-        Intent intent = new Intent(this,FirstReceiver.class);
+        //Intent intent = new Intent(this,FirstReceiver.class);
+        Intent intent = new Intent("custom.action.name");
         sendBroadcast(intent);
     }
 
     public void sendBroadcastInnerClass(View view) {
-        Intent intent = new Intent(this,SecondReceiver.class);
+        //Intent intent = new Intent(this,SecondReceiver.class);
+        Intent intent = new Intent("custom.action.name2");
         sendBroadcast(intent);
     }
 
