@@ -18,12 +18,12 @@
         </activity>
         <receiver android:name=".FirstReceiver">
             <intent-filter>
-                <action android:name="custom.action.name"></action>
+                <action android:name="android.intent.action.AIRPLANE_MODE"></action>
             </intent-filter>
         </receiver>
         <receiver android:name=".MainActivity$SecondReceiver">
             <intent-filter>
-                <action android:name="custom.action.name"></action>
+                <action android:name="custom.action.name2"></action>
             </intent-filter>
         </receiver>
         <receiver android:name=".ThirdReceiver">
