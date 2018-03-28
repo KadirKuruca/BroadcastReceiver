@@ -3,6 +3,7 @@
     package="com.kadirkuruca.broadcastreceiver">
 
     <permission android:name="my.permission" android:protectionLevel="signature"></permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -39,6 +40,11 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".MyReceiver"></receiver>
+        <receiver android:name=".AramaReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
