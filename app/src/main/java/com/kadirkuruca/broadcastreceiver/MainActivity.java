@@ -34,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
         sendOrderedBroadcast(intent,null, new FourthReceiver(),null,AppCompatActivity.RESULT_OK,"Android",bundle);
     }
 
+    public void sendBroadcastMessageSecurity(View view) {
+
+
+        Intent intent = new Intent("my.action.name");
+        //sendBroadcast(intent);
+        sendBroadcast(intent,"my.permission");
+    }
+
 
     public static class SecondReceiver extends BroadcastReceiver{
 
