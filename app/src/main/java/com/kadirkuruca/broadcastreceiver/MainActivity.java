@@ -3,6 +3,8 @@ package com.kadirkuruca.broadcastreceiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     Button broadcastNow;
+    private LocalBroadcastManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         broadcastNow = findViewById(R.id.btnBroadcast);
+        manager = LocalBroadcastManager.getInstance(this);
     }
 
     public void sendBroadcastMessage(View view) {
@@ -40,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent("my.action.name");
         //sendBroadcast(intent);
         sendBroadcast(intent,"my.permission");
+    }
+
+    public void sendNormalBroadcast(View view) {
+        Intent intent = new Intent(this,MyReceiver.class);
+        intent.putExtra("a",15);
+        intent.putExtra("b",20);
+        sendBroadcast(intent);
     }
 
 
@@ -66,5 +77,28 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            int toplam = intent.getIntExtra("toplam",0);
+            Toast.makeText(context,"Toplam : "+toplam,Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        manager.unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("my.result.receiver");
+        manager.registerReceiver(receiver,filter);
     }
 }
